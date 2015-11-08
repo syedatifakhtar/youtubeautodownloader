@@ -1,8 +1,9 @@
-package actor
+package com.syedatifakhtar.actor
 
-import actor.YoutubeDownloadManager.UpdateStatus
-import actor.YoutubeDownloaderProxySupervisor._
+import akka.actor.SupervisorStrategy.Stop
 import akka.actor._
+import com.syedatifakhtar.actor.YoutubeDownloadManager.UpdateStatus
+import com.syedatifakhtar.actor.YoutubeDownloaderProxySupervisor.{DownloadStatus, DownloadTimeout, DownloadVideo, Failed}
 import com.typesafe.config.ConfigFactory
 import net.ceedubs.ficus.Ficus._
 import play.api.libs.concurrent.Execution.Implicits._
@@ -15,10 +16,19 @@ class YoutubeDownloaderProxySupervisor extends Actor{
   var senderRef: ActorRef = null
   val config = ConfigFactory.load
   val maxDownloadWaitTime = config.as[FiniteDuration]("maxdownloadwaittime")
+  val log = play.api.Logger
   context.system.scheduler.schedule(maxDownloadWaitTime,maxDownloadWaitTime,self,DownloadTimeout)
 
+  override val supervisorStrategy = OneForOneStrategy(maxNrOfRetries = 10,withinTimeRange = 10 minutes){
+    case e:Exception=>
+      log.debug(s"Got exception while downloading video: $videoId\nError:$e\n failing!")
+      senderRef ! UpdateStatus(videoId,Failed(s"$e"))
+      context.stop(self)
+      Stop
+
+  }
   def receive = {
-    case downloadVideo@DownloadVideo(videoId) =>
+    case downloadVideo:DownloadVideo =>
       senderRef = sender
       this.videoId = videoId
       context.actorOf(Props[YoutubeDownloaderProxy]) ! downloadVideo
@@ -32,7 +42,7 @@ class YoutubeDownloaderProxySupervisor extends Actor{
 }
 
 object YoutubeDownloaderProxySupervisor {
-  case class DownloadVideo(videoId: String)
+  case class DownloadVideo(videoId: String,args: Option[String] = None,outputDirectory : String = ".")
   trait DownloadStatus
   case object Succeeded extends DownloadStatus
   case class Failed(message: String) extends DownloadStatus

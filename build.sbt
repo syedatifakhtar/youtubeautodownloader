@@ -17,9 +17,9 @@ assemblySettings
 
 jarName in assembly := "YoutubeAutoDownloader.jar"
 
-mainClass in assembly := Some("play.core.server.NettyServer")
-
 fullClasspath in assembly += Attributed.blank(PlayKeys.playPackageAssets.value)
+
+mainClass in assembly := Some("com.syedatifakhtar.Main")
 
 resolvers ++= Seq(
   "Atlassian Releases" at "https://maven.atlassian.com/public/",
@@ -39,14 +39,10 @@ libraryDependencies ++= Seq(
   ws exclude("commons-logging", "commons-logging"),
   jdbc,
   anorm,
-  "com.softwaremill.macwire" %% "macros" % "2.1.0" %"provided",
-  "com.softwaremill.macwire" %% "util" % "2.1.0",
-  "com.softwaremill.macwire" %% "proxy" % "2.1.0",
   "com.typesafe.akka" %% "akka-persistence-experimental" % "2.3.14",
   "com.typesafe.akka" %% "akka-slf4j" % "2.3.11",
   "ch.qos.logback" % "logback-classic" % "1.0.0" % "runtime",
-  "com.softwaremill.macwire" %% "macros" % "2.1.0",
-  "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
+  "org.scalatest" % "scalatest_2.11" % "2.2.4",
   "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test",
   "com.typesafe.play" %% "play" % "2.3.6",
   "net.ceedubs" %% "ficus" % "1.1.2"

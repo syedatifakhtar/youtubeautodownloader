@@ -1,4 +1,4 @@
-package model
+package com.syedatifakhtar.model
 
 object YoutubeModel{
   case class Snippet(val title: String,val description: String,resourceId: ResourceId)
