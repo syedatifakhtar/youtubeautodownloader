@@ -12,8 +12,11 @@ https://github.com/rg3/youtube-dl/blob/master/README.md#readme
 https://developers.google.com/youtube/registering_an_application
 
 3.Edit the application.conf file and modify the following config values-:
+
 #userId whose playlist you want to pull
 userId = <usernameHere>
+#applicationKey from google api
+applicationKey = <applicationKeyHere>
 
 4.Start the application jar with the following command -: java -jar YoutubeAutoDownloader.jar
 
@@ -27,10 +30,6 @@ sbt clean assembly
 
 compiles and creates the jar for you
 
-
-
-#applicationKey from google api
-applicationKey = <applicationKeyHere>
 
 
 Configs
@@ -51,8 +50,8 @@ maxdownloadwaittime = 1 hour
 outputDirectory = "downloads"
 
 
-youtube-dl configs
-~~~~~~~~~~~~~~~~~~~~~~
+Youtube-dl configs
+~~~~~~~~~~~~~~~~~~~~
 
 Youtube dl by itself also has a lot of configuration options,these can be configured in the global Xargs property for all downloads like below
 
