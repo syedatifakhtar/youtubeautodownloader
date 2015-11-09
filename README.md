@@ -32,7 +32,7 @@ Compiles and creates the jar for you
 
 
 #Configs
-~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 The following configs are available for modification and customization-:
 
