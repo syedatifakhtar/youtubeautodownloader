@@ -2,7 +2,7 @@ Scala and Play! app that uses the youtube API to fetch a given users youtube pla
 
 Ive left the service as a one time executable that shuts down and cleans itself automatically after all downloads have finished,this has been done purposely since the app maybe a little too heavy for devices such as the raspberry pi 2 which is what i created this for.
 
-Installation
+#Installation
 ~~~~~~~~~~~~
 
 1.Install youtube-dl,see steps here-:
@@ -26,31 +26,32 @@ http://askubuntu.com/questions/2368/how-do-i-set-up-a-cron-job
 4.Building and generating the jar yourself(Optional)-:
 You will need to have sbt for this (Brew install sbt)
 
-sbt clean assembly
-
-compiles and creates the jar for you
-
+5.sbt clean assembly
+Compiles and creates the jar for you
 
 
-Configs
+
+#Configs
 ~~~~~~~~~
 
 The following configs are available for modification and customization-:
 
-#Set to true for linux devices
+Set to true for linux devices
 ws.acceptAnyCertificate=true
 
-#Number of parallel video downloads you want to have
+Number of parallel video downloads you want to have
 maxParallelVideoDownloads = 20
 
-#Will timeout and fail the video download if it crosses this limit,valid values are in <hours,minutes,seconds>
+Will timeout and fail the video download if it crosses this limit,valid values are in <hours,minutes,seconds>
 maxdownloadwaittime = 1 hour
 
-#Output directory
+Output directory
 outputDirectory = "downloads"
 
 
-Youtube-dl configs
+
+
+#Youtube-dl configs
 ~~~~~~~~~~~~~~~~~~~~
 
 Youtube dl by itself also has a lot of configuration options,these can be configured in the global Xargs property for all downloads like below
